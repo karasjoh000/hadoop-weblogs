@@ -1,0 +1,5 @@
+Answers to Questions for HW#2
+
+1. /assets/js/the-associates.js	2456
+2. 10.99.99.186	6
+3. http://www.the-associates.co.uk/trailers/?p=1&r=&l=&o=/	60259

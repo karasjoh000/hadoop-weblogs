@@ -3,3 +3,5 @@ out
 test
 access_log
 *.iml
+.DS_Store
+src/DS_Store
