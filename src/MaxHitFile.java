@@ -42,7 +42,7 @@ public class MaxHitFile {
     public static class MaxHit extends Reducer<Text,IntWritable,Text,IntWritable> {
         private IntWritable result = new IntWritable();
         private static int max = 0;
-        private static Text maxkey;
+        private static Text maxkey = new Text();
         public void reduce(Text key, Iterable<IntWritable> values, Context context)
                 throws IOException, InterruptedException {
             int sum = 0;
@@ -50,13 +50,26 @@ public class MaxHitFile {
                 sum += val.get();
             if(sum > max) {
                 max = sum;
-                maxkey = key;
+                maxkey.set(key);
             }
         }
         // at the end write max value to file with its key.
         public void cleanup(Context context) throws IOException, InterruptedException {
-            result.set(max);
-            context.write(maxkey, result);
+            result.set(MaxHit.max);
+            context.write(MaxHit.maxkey, result);
+        }
+    }
+
+    //count up the values for each key.
+    public static class IntSumReducer extends Reducer<Text,IntWritable,Text,IntWritable> {
+        private IntWritable result = new IntWritable();
+        public void reduce(Text key, Iterable<IntWritable> values, Context context)
+                throws IOException, InterruptedException {
+            int sum = 0;
+            for (IntWritable val : values)
+                sum += val.get();
+            result.set(sum);
+            context.write(key, result);
         }
     }
 
@@ -68,8 +81,8 @@ public class MaxHitFile {
 
         job.setMapperClass(HitCount.class);
 
-        job.setCombinerClass(MaxHit.class); //perform the combiner at mappers. This will yield the same result.
         job.setReducerClass(MaxHit.class);
+        job.setCombinerClass(IntSumReducer.class);
 
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
