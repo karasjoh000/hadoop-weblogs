@@ -1,5 +1,0 @@
-Answers to Questions for HW#2
-
-1. /assets/js/the-associates.js	2456
-2. 10.99.99.186	6
-3. /assets/css/combined.css	117348
