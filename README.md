@@ -2,7 +2,7 @@
 --------
 ### Directions: 
 1. Put `src` dir into cloudera VM.  
-2. put access_log file into this directory  
+2. put access_log file into `src` directory  
 2. create a input directory in the hdfs:
 `hadoop fs -mkdir /p1`
 `hadoop fs -mkdir /p1/input`  
